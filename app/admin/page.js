@@ -1,5 +1,8 @@
+import Link from 'next/link';
 import { garantirTabela } from '../../lib/db';
 import { QUESTOES } from '../../lib/questions';
+import { chaveValida, rankingAberto, rotuloAbertura } from '../../lib/config';
+import { CABECALHOS, linhaDe } from '../../lib/export';
 
 export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Painel • Clube do Livro', robots: { index: false } };
@@ -7,9 +10,8 @@ export const metadata = { title: 'Painel • Clube do Livro', robots: { index: f
 // Acesse em /admin?key=SUA_CHAVE (a chave é a variável ADMIN_KEY na Vercel).
 export default async function Admin({ searchParams }) {
   const { key } = await searchParams;
-  const esperado = process.env.ADMIN_KEY;
 
-  if (!esperado || key !== esperado) {
+  if (!chaveValida(key)) {
     return (
       <main className="wrap">
         <div className="card">
@@ -23,9 +25,10 @@ export default async function Admin({ searchParams }) {
   }
 
   const sql = await garantirTabela();
-  const linhas = await sql`SELECT nome, answers, pontos FROM respostas`;
+  const linhas = await sql`SELECT nome, answers, pontos FROM respostas ORDER BY pontos DESC, created_at ASC`;
 
   const media = linhas.length ? (linhas.reduce((s, l) => s + l.pontos, 0) / linhas.length).toFixed(1) : 0;
+  const k = encodeURIComponent(key);
 
   function contar(id) {
     const q = QUESTOES.find((x) => x.id === id);
@@ -52,14 +55,23 @@ export default async function Admin({ searchParams }) {
   ];
 
   return (
-    <main className="wrap">
+    <main className="wrap" style={{ maxWidth: 1100 }}>
       <div className="hero">
         <div className="big">📊</div>
         <h1>Painel do Clube</h1>
         <p>{linhas.length} resposta(s) · média de {media} pontos</p>
+        <div className="links">
+          <a className="btn" href={`/admin/csv?key=${k}`}>⬇️ Baixar planilha (CSV)</a>
+          <Link className="btn ghost" href={`/ranking?key=${k}`}>🏆 Ver ranking (privado)</Link>
+        </div>
+        <p className="sub" style={{ fontSize: 13 }}>
+          {rankingAberto()
+            ? 'O ranking já está aberto para todas.'
+            : `O ranking abre para as meninas em ${rotuloAbertura()}.`}
+        </p>
       </div>
 
-      <div style={{ display: 'grid', gap: 14 }}>
+      <div style={{ display: 'grid', gap: 14, gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
         {blocos.map(([titulo, id]) => {
           const dados = contar(id).slice(0, id === 'livros_lidos' ? 15 : 5);
           return (
@@ -82,6 +94,34 @@ export default async function Admin({ searchParams }) {
             </div>
           );
         })}
+      </div>
+
+      <div className="card" style={{ marginTop: 14 }}>
+        <h3>📋 Respostas de cada participante</h3>
+        {linhas.length === 0 ? (
+          <span className="sub">Sem respostas ainda.</span>
+        ) : (
+          <div className="scroll">
+            <table className="tabela-resp">
+              <thead>
+                <tr>
+                  {CABECALHOS.map((c) => (
+                    <th key={c}>{c}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {linhas.map((l) => (
+                  <tr key={l.nome}>
+                    {linhaDe(l).map((c, i) => (
+                      <td key={i} className={i === 1 ? 'n' : ''}>{c}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </main>
   );

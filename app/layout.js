@@ -1,8 +1,8 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'Clube do Livro • Jornada de Leitura',
-  description: 'Responda, ganhe pontos e suba no ranking do clube do livro!',
+  title: "Dias' Book Club • Jornada de Leitura",
+  description: "Responda, ganhe pontos e descubra quem é a campeã do Dias' Book Club!",
 };
 
 export default function RootLayout({ children }) {

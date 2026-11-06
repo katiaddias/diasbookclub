@@ -6,7 +6,6 @@ import {
   QUESTOES,
   PONTOS_MAXIMOS,
   calcularPontos,
-  pontosDaQuestao,
   nivelDe,
   conquistasDe,
 } from '../lib/questions';
@@ -94,9 +93,9 @@ export default function Home() {
     return (
       <main className="wrap">
         <div className="hero">
-          <div className="big">📚</div>
-          <h1>Jornada do Clube do Livro</h1>
-          <p>Responda as perguntas, ganhe pontos, desbloqueie conquistas e descubra seu nível de leitora!</p>
+          <img className="logo" src="/logo.png" alt="Dias' Book Club" />
+          <h1>Jornada de Leitura</h1>
+          <p>Responda as perguntas, ganhe pontos e descubra no dia do encontro quem é a campeã do clube!</p>
         </div>
         <div className="card">
           <h3>Como você se chama?</h3>
@@ -126,6 +125,19 @@ export default function Home() {
 
   // ---------- Tela de resultado ----------
   if (etapa === total + 1 && resultado) {
+    // Antes do dia do encontro: tela final sem pontos, nível ou posição.
+    if (!resultado.posicao) {
+      return (
+        <main className="wrap">
+          <div className="card resultado" style={{ marginTop: 48, padding: '40px 20px' }}>
+            <img className="logo pequeno" src="/logo.png" alt="Dias' Book Club" />
+            <div className="trofeu">🎉</div>
+            <h2 style={{ marginTop: 16 }}>O ranking será revelado no dia do encontro! 🎉</h2>
+          </div>
+        </main>
+      );
+    }
+
     const nivel = nivelDe(resultado.pontos);
     const conquistas = conquistasDe(answers);
     return (
@@ -141,10 +153,12 @@ export default function Home() {
               Faltam {nivel.proximo.faltam} pontos para virar {nivel.proximo.emoji} {nivel.proximo.nome}
             </div>
           )}
-          <p>
-            Você está em <b>{resultado.posicao}º lugar</b> entre {resultado.total} participante
-            {resultado.total === 1 ? '' : 's'}.
-          </p>
+          {resultado.posicao ? (
+            <p>
+              Você está em <b>{resultado.posicao}º lugar</b> entre {resultado.total} participante
+              {resultado.total === 1 ? '' : 's'}.
+            </p>
+          ) : null}
 
           {conquistas.length > 0 && (
             <>
@@ -163,9 +177,11 @@ export default function Home() {
             </>
           )}
 
-          <div className="links">
-            <Link className="btn" href="/ranking">Ver ranking 🏆</Link>
-          </div>
+          {resultado.posicao && (
+            <div className="links">
+              <Link className="btn" href="/ranking">Ver ranking 🏆</Link>
+            </div>
+          )}
         </div>
       </main>
     );
@@ -191,11 +207,6 @@ export default function Home() {
         <div className="secao">{q.secao}</div>
         <div className="q-emoji">{q.emoji}</div>
         <div className="q-texto">{q.texto}</div>
-        <div className="q-dica">
-          {q.dica}
-          {pontosDaQuestao(q, answers) > 0 && <b> · +{pontosDaQuestao(q, answers)} pts agora</b>}
-        </div>
-
         {q.tipo === 'multi' && <div className="contador">{qtdMulti} livro(s) marcado(s)</div>}
 
         <div className={`opcoes ${grade ? 'grade' : 'lista'}`}>

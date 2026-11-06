@@ -1,13 +1,13 @@
 :root {
-  --bg: #fbf6ee;
+  --bg: #fdf5f9;
   --card: #ffffff;
-  --ink: #2b2230;
-  --muted: #7a6f82;
-  --brand: #7c3aed;
-  --brand-dark: #5b21b6;
-  --accent: #f59e0b;
+  --ink: #2e1620;
+  --muted: #8a6f7c;
+  --brand: #951533;
+  --brand-dark: #6b0f24;
+  --accent: #e5bcd2;
   --ok: #16a34a;
-  --line: #eadfce;
+  --line: #efd9e5;
   --radius: 18px;
 }
 
@@ -17,7 +17,7 @@ html, body { margin: 0; padding: 0; }
 
 body {
   font-family: ui-rounded, 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
-  background: radial-gradient(1200px 500px at 50% -100px, #efe3ff 0%, var(--bg) 60%);
+  background: radial-gradient(1200px 500px at 50% -100px, #f6d9e8 0%, var(--bg) 60%);
   color: var(--ink);
   min-height: 100vh;
   line-height: 1.45;
@@ -37,25 +37,25 @@ h1, h2, h3 { margin: 0 0 8px; line-height: 1.2; }
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 20px;
-  box-shadow: 0 6px 24px rgba(91, 33, 182, 0.07);
+  box-shadow: 0 6px 24px rgba(149, 21, 51, 0.08);
 }
 
 .hud {
   position: sticky; top: 0; z-index: 10;
-  background: rgba(251, 246, 238, 0.92);
+  background: rgba(253, 245, 249, 0.92);
   backdrop-filter: blur(8px);
   padding: 12px 0 10px;
   margin-bottom: 8px;
 }
 .hud-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 14px; }
-.xp { font-weight: 800; color: var(--brand-dark); background: #f1e8ff; padding: 4px 12px; border-radius: 999px; }
+.xp { font-weight: 800; color: var(--brand-dark); background: #f8e6ef; padding: 4px 12px; border-radius: 999px; }
 .xp.pop { animation: pop 0.45s ease; }
-.bar { height: 10px; border-radius: 999px; background: #eadff7; margin-top: 8px; overflow: hidden; }
+.bar { height: 10px; border-radius: 999px; background: #f1d3e3; margin-top: 8px; overflow: hidden; }
 .bar > div { height: 100%; background: linear-gradient(90deg, var(--brand), var(--accent)); transition: width 0.35s ease; }
 
 .secao { color: var(--brand); font-weight: 700; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
 .q-emoji { font-size: 40px; }
-.q-texto { font-size: 21px; font-weight: 700; margin: 6px 0 4px; }
+.q-texto { font-size: 21px; font-weight: 700; margin: 6px 0 16px; }
 .q-dica { color: var(--muted); font-size: 14px; margin-bottom: 14px; }
 
 .opcoes { display: grid; gap: 8px; }
@@ -77,9 +77,9 @@ h1, h2, h3 { margin: 0 0 8px; line-height: 1.2; }
   color: var(--ink);
 }
 .opcoes.grade .opcao { justify-content: center; font-size: 20px; font-weight: 700; padding: 16px 0; }
-.opcao:hover { border-color: #c9b3f5; }
+.opcao:hover { border-color: #e5bcd2; }
 .opcao:active { transform: scale(0.98); }
-.opcao.sel { border-color: var(--brand); background: #f5edff; font-weight: 700; }
+.opcao.sel { border-color: var(--brand); background: #fbeaf2; font-weight: 700; }
 .check { width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--line); flex: none; display: grid; place-items: center; font-size: 14px; color: #fff; }
 .opcao.sel .check { background: var(--brand); border-color: var(--brand); }
 
@@ -109,8 +109,8 @@ input[type='text']:focus { outline: none; border-color: var(--brand); }
 }
 .btn:hover { background: var(--brand-dark); }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.btn.ghost { background: #f1e8ff; color: var(--brand-dark); flex: 0 0 auto; }
-.btn.ghost:hover { background: #e6d8ff; }
+.btn.ghost { background: #f8e6ef; color: var(--brand-dark); flex: 0 0 auto; }
+.btn.ghost:hover { background: #f0cfe0; }
 
 .erro { color: #b91c1c; font-weight: 600; margin-top: 10px; }
 
@@ -121,7 +121,7 @@ input[type='text']:focus { outline: none; border-color: var(--brand); }
 .sub { color: var(--muted); }
 
 .badges { display: grid; gap: 8px; margin-top: 14px; text-align: left; }
-.badge { display: flex; gap: 12px; align-items: center; background: #fff8e6; border: 1px solid #f6e2a8; border-radius: 14px; padding: 10px 12px; }
+.badge { display: flex; gap: 12px; align-items: center; background: #fdf0f6; border: 1px solid #e5bcd2; border-radius: 14px; padding: 10px 12px; }
 .badge .e { font-size: 28px; }
 .badge b { display: block; }
 .badge span { color: var(--muted); font-size: 13px; }
@@ -132,7 +132,7 @@ input[type='text']:focus { outline: none; border-color: var(--brand); }
 .rank .nome { flex: 1; font-weight: 700; }
 .rank .nv { color: var(--muted); font-size: 13px; font-weight: 500; display: block; }
 .rank .pts { font-weight: 900; color: var(--brand-dark); }
-.rank li.top1 { background: #fff7d6; border-color: #f2d35f; }
+.rank li.top1 { background: #fde7f0; border-color: #951533; }
 
 .tabela { width: 100%; border-collapse: collapse; font-size: 15px; }
 .tabela td { padding: 6px 4px; border-bottom: 1px solid var(--line); }
@@ -150,3 +150,21 @@ input[type='text']:focus { outline: none; border-color: var(--brand); }
   .opcoes.grade { grid-template-columns: repeat(4, 1fr); }
   .q-texto { font-size: 19px; }
 }
+
+/* ---- ranking secreto / contagem regressiva ---- */
+.contagem { display: flex; justify-content: center; gap: 10px; margin: 14px 0; }
+.caixa-tempo { background: #fbeaf2; border: 2px solid #e5bcd2; border-radius: 14px; min-width: 66px; padding: 10px 6px; }
+.caixa-tempo b { display: block; font-size: 30px; color: var(--brand-dark); font-variant-numeric: tabular-nums; }
+.caixa-tempo span { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.aviso { background: #fdf0f6; border-color: #e5bcd2; margin-bottom: 14px; }
+
+/* ---- painel: respostas individuais ---- */
+.scroll { overflow-x: auto; }
+.tabela-resp { border-collapse: collapse; font-size: 13px; min-width: 900px; width: 100%; }
+.tabela-resp th, .tabela-resp td { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+.tabela-resp th { background: #fbeaf2; position: sticky; top: 0; font-size: 12px; }
+.tabela-resp td.n { text-align: right; font-weight: 800; color: var(--brand-dark); }
+
+/* ---- logo do clube ---- */
+.logo { display: block; margin: 0 auto 14px; width: 190px; height: 190px; border-radius: 28px; box-shadow: 0 10px 30px rgba(149, 21, 51, 0.25); }
+.logo.pequeno { width: 120px; height: 120px; border-radius: 20px; }

@@ -1,5 +1,6 @@
 import { garantirTabela } from '../../../lib/db';
 import { sanitizeAnswers, calcularPontos } from '../../../lib/questions';
+import { rankingAberto } from '../../../lib/config';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,6 +24,12 @@ export async function POST(req) {
       DO UPDATE SET nome = EXCLUDED.nome, answers = EXCLUDED.answers,
                     pontos = EXCLUDED.pontos, updated_at = now()
     `;
+
+    // Antes da data de abertura nem os pontos nem a posição são enviados (nem pela rede),
+    // para manter o segredo.
+    if (!rankingAberto()) {
+      return Response.json({ ok: true });
+    }
 
     const [{ posicao }] = await sql`
       SELECT COUNT(*)::int + 1 AS posicao FROM respostas WHERE pontos > ${pontos}
