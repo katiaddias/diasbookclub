@@ -32,6 +32,7 @@ export default async function Admin({ searchParams }) {
 
   function contar(id) {
     const q = QUESTOES.find((x) => x.id === id);
+    if (!q) return []; // pergunta que não existe mais: não quebra o painel
     const cont = {};
     for (const l of linhas) {
       const v = l.answers?.[id];
@@ -44,8 +45,15 @@ export default async function Admin({ searchParams }) {
   }
 
   const blocos = [
-    ['🏆 Melhor livro', 'melhor_livro'],
-    ['👎 Pior livro', 'pior_livro'],
+    ['💕 Melhor romance', 'melhor_romance'],
+    ['🕵️ Melhor suspense', 'melhor_suspense'],
+    ['✝️ Melhor livro cristão', 'melhor_cristao'],
+    ['🇧🇷 Melhor livro nacional', 'melhor_nacional'],
+    ['🕊️ Melhor ficção cristã', 'melhor_ficcao_crista'],
+    ['👎 Menos gostou: romance', 'pior_romance'],
+    ['👎 Menos gostou: suspense', 'pior_suspense'],
+    ['👎 Menos gostou: nacional', 'pior_nacional'],
+    ['👎 Menos gostou: ficção cristã', 'pior_ficcao_crista'],
     ['🌪️ Maior reviravolta', 'reviravolta'],
     ['😡 Mais raiva', 'raiva'],
     ['🥹 Surpreendeu positivamente', 'surpresa_gostar'],
